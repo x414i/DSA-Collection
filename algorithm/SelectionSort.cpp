@@ -1,5 +1,4 @@
 #include <iostream>
-// Selection Sorting
 using namespace std;
 void printArray(int a[6])
 {
@@ -10,7 +9,9 @@ void printArray(int a[6])
 
     cout << endl;
 }
-void sortArray(int a[6])
+
+// Selection Sorting
+void selectionSort(int a[6])
 {
     int selection;
     for (int i = 0; i < 6; i++)
@@ -27,24 +28,9 @@ void sortArray(int a[6])
     }
 }
 
-void insertionSort(int a[6])
-{
-    int key, j;
-    for (int i = 1; i < 6; i++)
-    {
-        key = a[i];
-        j = i - 1;
-        while (a[j] > key && j >= 0)
-        {
-            a[j + 1] = a[j];
-            j--;
-        }
-        a[j + 1] = key;
-    }
-}
 int main()
 {
     int a[6] = {5, 4, 8, 1, 2, 6};
-    insertionSort(a);
+    selectionSort(a);
     printArray(a);
 }
