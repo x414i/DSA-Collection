@@ -45,7 +45,7 @@ public:
                 // case 4: cout << "\n" << getTopIndex() << endl; break;
             case 5:
                 cout << "\n"
-                     << getTopValue() << endl;
+                    << getTopValue() << endl;
                 break;
             default:
                 break;
@@ -96,16 +96,16 @@ public:
 
     void display()
     {
-        Node<T> *temp = top;
+        
         cout << endl
-             << "_\n";
-        while (temp != nullptr)
+            << "_\n";
+        while (top != nullptr)
         {
-            cout << temp->data << "\n";
-            temp = temp->next;
+            cout << top->data << "\n";
+            top = top->next;
         }
         cout << "_\n"
-             << endl;
+            << endl;
     }
 };
 

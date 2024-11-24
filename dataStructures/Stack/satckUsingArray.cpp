@@ -31,11 +31,11 @@ public:
                 break;
             case 4:
                 cout << "\n"
-                     << getTop() << endl;
+                    << getTop() << endl;
                 break;
             case 5:
                 cout << "\n"
-                     << getTopValue() << endl;
+                    << getTopValue() << endl;
                 break;
             default:
                 break;
@@ -75,14 +75,13 @@ public:
 
     void display()
     {
-        int temp = top;
         cout << endl
-             << "_\n";
-        while (temp >= 0)
+            << "_\n";
+        while (top >= 0)
 
-            cout << arr[temp--] << "\n";
+            cout << arr[top--] << "\n";
         cout << "_\n"
-             << endl;
+            << endl;
     }
 };
 
