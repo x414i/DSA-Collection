@@ -84,7 +84,7 @@ void addAtKey( node* h,int key)
     newNode->next = _curr;
 }
 
-void AddOrder(node*& h, int data) 
+void AddSorting(node*& h, int data) 
 {
     node* newNode = new node; 
     newNode->data = data;
@@ -108,6 +108,8 @@ void AddOrder(node*& h, int data)
     _curr->next = newNode;
 }
 
+
+// Print , Print Revers Nodes , Print Revers using Recursion
 void print(node* h) 
 {
     node* _temp = h;
@@ -117,6 +119,33 @@ void print(node* h)
         _temp = _temp->next;
     }
     cout << "NULL" << endl; 
+}
+
+void print_revers(node* h) 
+{
+    node* _temp = h;
+    if (_temp != NULL) 
+    {
+        print_revers(_temp->next);
+        cout << _temp->data << " -> ";
+    }
+}
+
+void print_reversNode(node*& h) 
+{
+    node* _temp =h;
+    node* _next = NULL;
+    node* _prev = NULL;
+    node* _curr = _temp;
+    while (_curr != NULL)
+    {
+        _next = _curr->next;
+        _curr->next = _prev;
+        _prev = _curr;
+        _curr = _next;
+    }
+    _temp = _prev;
+    print(_temp);
 }
 
 // Delete First , Last , Position , At Key  
@@ -385,6 +414,7 @@ void selectionSort(node*& h)
 }
 
 //Read Key and Show
+/*
 void display1(node* h) 
 { 
     int op = 0;
@@ -618,21 +648,26 @@ void display2(node*& h) {
         }}
     } while (op != 0);
 }
-
-void display(node*& h) {
+*/
+void display(node*& h) 
+{
     int op = 0;
-    do {
+    do 
+    {
         cout << "\n[-] Choose an operation: \n";
         cout << "1. Add\n";
         cout << "2. Delete\n";
         cout << "3. Modify\n";
         cout << "4. Sort\n";
+        cout<<"5.  Show\n";
         cout << "0. Exit\n";
         cout << "Enter your choice: ";
         cin >> op;
 
-        switch (op) {
-            case 1: { 
+        switch (op)
+        {
+            case 1: 
+            { 
                 int addOp;
                 cout << "\n[-] Choose Add Operation: \n";
                 cout << "1. Add First\n";
@@ -644,7 +679,8 @@ void display(node*& h) {
                 cin >> addOp;
 
                 int key;
-                switch (addOp) {
+                switch (addOp) 
+                {
                     case 1:
                         cout << "\n[Add First] Enter key: ";
                         cin >> key;
@@ -671,16 +707,16 @@ void display(node*& h) {
                     case 5:
                         cout << "\n[Add by Order] Enter key: ";
                         cin >> key;
-                        AddOrder(h, key); 
+                        AddSorting(h, key); 
                         break;
                     default:
                         cout << "Invalid choice!" << endl;
                         break;
                 }
-                print(h);
                 break;
             }
-            case 2: { 
+            case 2: 
+            { 
                 int deleteOp;
                 cout << "\n[-] Choose Delete Operation: \n";
                 cout << "1. Delete First\n";
@@ -690,7 +726,8 @@ void display(node*& h) {
                 cout << "Enter your choice: ";
                 cin >> deleteOp;
 
-                switch (deleteOp) {
+                switch (deleteOp) 
+                {
                     case 1:
                         deleteBegin(h);
                         break;
@@ -713,10 +750,10 @@ void display(node*& h) {
                         cout << "Invalid choice!" << endl;
                         break;
                 }
-                print(h);
                 break;
             }
-            case 3: {
+            case 3: 
+            {
                 int modifyOp;
                 cout << "\n[-] Choose Modify Operation: \n";
                 cout << "1. Modify at Key\n";
@@ -725,7 +762,8 @@ void display(node*& h) {
                 cin >> modifyOp;
 
                 int newKey, oldKey;
-                switch (modifyOp) {
+                switch (modifyOp) 
+                {
                     case 1:
                         cout << "\n[Old key] Enter old key: ";
                         cin >> oldKey;
@@ -747,7 +785,8 @@ void display(node*& h) {
                 print(h);
                 break;
             }
-            case 4: { 
+            case 4: 
+            { 
                 int sortOp;
                 cout << "\n[-] Choose Sort Method: \n";
                 cout << "1. Bubble Sort\n";
@@ -756,7 +795,8 @@ void display(node*& h) {
                 cout << "Enter your choice: ";
                 cin >> sortOp;
 
-                switch (sortOp) {
+                switch (sortOp) 
+                {
                     case 1:
                         cout << "Sorting using Bubble Sort..." << endl;
                         bubbleSort(h);
@@ -773,9 +813,34 @@ void display(node*& h) {
                         cout << "Invalid choice!" << endl;
                         break;
                 }
-                print(h);
                 break;
             }
+
+            case 5: 
+            { 
+                int printOp;
+                cout << "\n[-] Choose Print Operation: \n";
+                cout << "1. print sequnce\n";
+                cout << "2. print revers using reusion \n";
+                cout << "3. print revers using Threre Nodes\n";
+                cout << "Enter your choice: ";
+                cin >> printOp;
+
+                switch (printOp) 
+                {
+                    case 1:
+                        print(h);
+                        break;
+                    case 2:
+                        print_revers(h);
+                        break;
+                    case 3:
+                        print_reversNode(h);
+                        break;
+                    default:
+                        cout << "Invalid choice!" << endl;
+                        break;
+                }
             case 0:
                 cout << "Exiting..." << endl;
                 break;
@@ -783,7 +848,9 @@ void display(node*& h) {
                 cout << "Invalid choice!" << endl;
                 break;
         }
-    } while (op != 0);
+        }
+    }
+    while (op != 0);
 }
 
 int main() 
