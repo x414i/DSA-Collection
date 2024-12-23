@@ -9,7 +9,7 @@ struct Node
     Node *left;
     Node *right;
 
-    Node(string n) : name(n), left(nullptr), right(nullptr) {}
+    Node(string n) : name(n), left(NULL), right(NULL) {}
 };
 
 class BST
@@ -19,7 +19,7 @@ private:
 
     void insert(Node *&node, const string &name)
     {
-        if (node == nullptr)
+        if (node == NULL)
         {
             node = new Node(name);
         }
@@ -35,7 +35,7 @@ private:
 
     void inorder(Node *node)
     {
-        if (node != nullptr)
+        if (node != NULL)
         {
             inorder(node->left);
             cout << node->name << " ";
@@ -45,16 +45,17 @@ private:
 
     void preOrder(Node *node)
     {
-        if (node != nullptr)
+        if (node != NULL)
         {
             inorder(node->left);
             inorder(node->right);
             cout << node->name << " ";
         }
     }
+    
     void postOrder(Node *node)
     {
-        if (node != nullptr)
+        if (node != NULL)
         {
             cout << node->name << " ";
             inorder(node->left);
@@ -63,13 +64,40 @@ private:
     }
 
 public:
-    BST() : root(nullptr) {}
+    BST() : root(NULL) {}
 
-    void insert(const string &name)
+    void insert(string &name)
     {
         insert(root, name);
     }
+    
+    Node* findMin(Node* node) {
+        while (node->left != NULL) node = node->left;
+        return node;
+    }
 
+    Node* deleteNode(Node* node, string name) {
+        if (node == NULL) return node;
+        if (name < node->name) {
+            node->left = deleteNode(node->left, name);
+        } else if (name > node->name) {
+            node->right = deleteNode(node->right, name);
+        } else {
+            if (node->left == NULL) {
+                Node *temp = node->right;
+                delete node;
+                return temp;
+            } else if (node->right == NULL) {
+                Node *temp = node->left;
+                delete node;
+                return temp;
+            }
+            Node* temp = findMin(node->right);
+            node->name = temp->name;
+            node->right = deleteNode(node->right, temp->name);
+        }
+        return node;
+    }
     void displayInOrder()
     {
         inorder(root);
@@ -85,36 +113,46 @@ public:
         preOrder(root);
         cout << endl;
     }
+    
+    void menu() 
+    {
+        int choice;
+        string name;
+        while (true) 
+        {
+            cout << "Enter 1 to insert, 2 for inorder, 3 for preorder, 4 for postorder, 0 to exit: ";
+            cin >> choice;
+            switch (choice) 
+            {
+                case 1:
+                    cout << "Enter name to insert: ";
+                    cin >> name;
+                    insert(root, name);
+                    break;
+                case 2:
+                    inorder(root);
+                    cout << endl;
+                    break;
+                case 3:
+                    preOrder(root);
+                    cout << endl;
+                    break;
+                case 4:
+                    postOrder(root);
+                    cout << endl;
+                    break;
+                case 0:
+                    return;
+                default:
+                    cout << "Invalid choice, please try again." << endl;
+            }
+        }
+    }
 };
 
 int main()
 {
     BST tree;
-
-    tree.insert("ahmed");
-    tree.insert("xzxzxzx");
-    tree.insert("zain");
-    tree.insert("bassem");
-    tree.insert("ali");
-
-    tree.insert("othman");
-    tree.insert("abdSalam");
-    tree.insert("yazin");
-    tree.insert("amin");
-    tree.insert("x414i");
-
-    tree.insert("ahmed");
-    tree.insert("xzxzxzx");
-    tree.insert("zain");
-    tree.insert("bassem");
-    tree.insert("ali");
-
-    cout << "Names in order: ";
-    tree.displayInOrder();
-    cout << "\nNames post order: ";
-    tree.displaypostOrder();
-    cout << "\nNames pre order: ";
-    tree.displaypreOrder();
-
+    tree.menu();
     return 0;
 }
