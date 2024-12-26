@@ -1,158 +1,279 @@
-#include <iostream>
-#include <string>
+#include <iostream> 
+using namespace std; 
 
-using namespace std;
+struct node
+{ 
+    int data; 
+    node *left; 
+    node *right; 
+}; 
 
-struct Node
+
+//in order function || lVR 
+void print1(node *r) 
+{ 
+    if(r!=NULL) 
+    { 
+        print1(r->left); 
+        cout<<r->data<<" "; 
+        print1(r->right); 
+    } 
+} 
+
+// pre order function || VLR 
+void print2(node *r) 
+{ 
+    if(r!=NULL) 
+    { 
+        cout<<r->data<<" "; 
+        print2(r->left); 
+        print2(r->right); 
+    } 
+} 
+
+//post order function || LRV 
+void print3(node *r) 
+{ 
+    if(r!=NULL) 
+    { 
+        print3(r->left); 
+        print3(r->right); 
+        cout<<r->data<<" "; 
+    } 
+} 
+
+
+//find the size of the tree 
+int sizeoftree(node *r) 
+{ 
+    if(r==NULL) 
+        return 0; 
+    else return sizeoftree(r->left)+1+sizeoftree(r->right); 
+} 
+
+
+node *addnode(node *r,int v) 
+{ 
+    if(r==NULL) 
+    { 
+       node *cn=new node; 
+        cn->data=v; 
+        cn->left=NULL; 
+        cn->right=NULL; 
+        return cn; 
+    } 
+    else if(v<=r->data) 
+    r->left=addnode(r->left,v); 
+    else 
+    r->right=addnode(r->right,v); 
+    return r; 
+} 
+
+
+node *serach(node *r,int v) 
+{ 
+    if(r==NULL || r->data==v) 
+        return r; 
+    else if(v<r->data) 
+        return serach(r->left,v); 
+    else 
+        return serach(r->right,v); 
+} 
+
+int getmax(node *r) 
+{ 
+   // node *t=r; 
+    while(r->right!=NULL) 
+        r=r->right; 
+    return r->data; 
+} 
+
+
+node *getmin(node *r) 
+{ 
+   // node *t=r; 
+    while(r->left!=NULL) 
+        r=r->left; 
+ 
+    return r; 
+} 
+
+node *del(int v,node *r) 
+{ 
+    if(r==NULL) 
+        return r; 
+    else if(v<r->data) 
+        r->left=del(v,r->left); 
+    else if(v>r->data) 
+        r->right=del(v,r->right); 
+    else if(r->left==NULL && r->right==NULL) 
+    { 
+        free(r); 
+        return NULL; 
+    } 
+    else if(r->left==NULL) 
+    { 
+        node *t=r->right; 
+        free(r); 
+        return t; 
+    } 
+ 
+    else if(r->right==NULL) 
+    { 
+        node *t=r->left; 
+        free(r); 
+        return t; 
+    } 
+ 
+    else { 
+        node *t=getmin(r->right); 
+        r->data=t->data; 
+        r->right=del(t->data,r->right); 
+    } 
+ 
+    return r; 
+} 
+
+int treeDepth(node *r) 
+{ 
+       int leftDepth =0; int rightDepth =0 ; 
+    if (r == NULL) 
+        return 0; 
+     leftDepth += treeDepth(r->left); 
+     rightDepth += treeDepth(r->right); 
+     int macDepth = leftDepth>=rightDepth?leftDepth:rightDepth; 
+     /* 
+     if(leftDepth>= rightDepth) 
+  macDepth = leftDepth; 
+  else 
+   int macDepth = rightDepth; 
+     */ 
+    return 1 + macDepth; 
+} 
+
+void menu()
+ {
+    cout<<"\n\t***\n";
+        cout<<"1. Add Node"<<endl;
+        cout<<"2. Delete Node"<<endl;
+        cout<<"3. Search Node"<<endl;
+        cout<<"4. Get Max Node"<<endl;
+        cout<<"5. Get Min Node"<<endl;
+        cout<<"6. Get Size of Tree"<<endl;
+        cout<<"7. Get Depth of Tree"<<endl;
+        cout<<"8. Print PreOrder "<<endl;
+        cout<<"9. Print inOrder "<<endl;
+        cout<<"10. Print PostOrder "<<endl;
+        cout<<"0. Exit"<<endl;
+            cout<<"\n\t***\n";
+
+ }
+
+
+void display( node*root)
 {
-    string name;
-    Node *left;
-    Node *right;
-
-    Node(string n) : name(n), left(NULL), right(NULL) {}
-};
-
-class BST
-{
-private:
-    Node *root;
-
-    void insert(Node *&node, const string &name)
+    int op = -1;
+    while(op != 0 )
     {
-        if (node == NULL)
+        menu();
+        cout<<"Enter Option: ";
+        cin>>op;
+        switch(op)
         {
-            node = new Node(name);
-        }
-        else if (name < node->name)
-        {
-            insert(node->left, name);
-        }
-        else
-        {
-            insert(node->right, name);
-        }
-    }
-
-    void inorder(Node *node)
-    {
-        if (node != NULL)
-        {
-            inorder(node->left);
-            cout << node->name << " ";
-            inorder(node->right);
-        }
-    }
-
-    void preOrder(Node *node)
-    {
-        if (node != NULL)
-        {
-            inorder(node->left);
-            inorder(node->right);
-            cout << node->name << " ";
-        }
-    }
-    
-    void postOrder(Node *node)
-    {
-        if (node != NULL)
-        {
-            cout << node->name << " ";
-            inorder(node->left);
-            inorder(node->right);
-        }
-    }
-
-public:
-    BST() : root(NULL) {}
-
-    void insert(string &name)
-    {
-        insert(root, name);
-    }
-    
-    Node* findMin(Node* node) {
-        while (node->left != NULL) node = node->left;
-        return node;
-    }
-
-    Node* deleteNode(Node* node, string name) {
-        if (node == NULL) return node;
-        if (name < node->name) {
-            node->left = deleteNode(node->left, name);
-        } else if (name > node->name) {
-            node->right = deleteNode(node->right, name);
-        } else {
-            if (node->left == NULL) {
-                Node *temp = node->right;
-                delete node;
-                return temp;
-            } else if (node->right == NULL) {
-                Node *temp = node->left;
-                delete node;
-                return temp;
-            }
-            Node* temp = findMin(node->right);
-            node->name = temp->name;
-            node->right = deleteNode(node->right, temp->name);
-        }
-        return node;
-    }
-    void displayInOrder()
-    {
-        inorder(root);
-        cout << endl;
-    }
-    void displaypostOrder()
-    {
-        postOrder(root);
-        cout << endl;
-    }
-    void displaypreOrder()
-    {
-        preOrder(root);
-        cout << endl;
-    }
-    
-    void menu() 
-    {
-        int choice;
-        string name;
-        while (true) 
-        {
-            cout << "Enter 1 to insert, 2 for inorder, 3 for preorder, 4 for postorder, 0 to exit: ";
-            cin >> choice;
-            switch (choice) 
+            case 1:
             {
-                case 1:
-                    cout << "Enter name to insert: ";
-                    cin >> name;
-                    insert(root, name);
-                    break;
-                case 2:
-                    inorder(root);
-                    cout << endl;
-                    break;
-                case 3:
-                    preOrder(root);
-                    cout << endl;
-                    break;
-                case 4:
-                    postOrder(root);
-                    cout << endl;
-                    break;
-                case 0:
-                    return;
-                default:
-                    cout << "Invalid choice, please try again." << endl;
+                int val;
+                cout<<"Enter Value: ";
+                cin>>val;
+                root = addnode(root, val); 
+                break;
+            }
+            case 2:
+            {
+                int val;
+                cout<<"Enter Value: ";
+                cin>>val;
+                del(val,root);
+                break;
+            }
+            case 3:
+            {
+                int val;
+                cout<<"Enter Value: ";
+                cin>>val;
+                cout<<serach(root,val);
+                break;
+            }
+            case 4:
+            {
+                cout<<"Max Value: "<<getmax(root)<<endl;
+                break;
+            }
+            case 5:
+            {
+                cout<<"Min Value: "<<getmin(root)<<endl;
+                break;
+            }
+            case 6:
+            {
+                cout<<"Size of Tree: "<<sizeoftree(root)<<endl;
+                break;
+            }
+            case 7:
+            {
+                cout<<"Depth of Tree: "<<treeDepth(root)<<endl;
+                break;
+            }
+            case 8:
+            {
+                cout<<"\n\n\t *** \n";
+                cout<<"PreOrder of Tree: ";
+                cout<<"\n [LVR] [";
+                print2(root);
+                cout<<"]\n";
+                cout<<"\n\n\t *** \n";
+
+                break;
+            }
+            case 9:
+            {
+            cout<<"\n\n\t *** \n";
+                cout<<"In Order of Tree: ";
+            cout<<"\n [VLR] [";
+                print1(root);
+                cout<<"]\n";
+                cout<<"\n\n\t *** \n";
+
+                break;
+            }
+            case 10:
+            {
+                cout<<"\n\n\t *** \n";
+                cout<<"Post Order of Tree: ";
+                cout<<"\n [LRV] [";
+                print3(root);  
+                cout<<"]\n";
+                cout<<"\n\n\t *** \n";
+                break;
+            }
+            
+           case 0:
+            {
+                cout<<"Exiting..."<<endl;
+                break;
+            }
+            default:
+            {
+                cout<<"Invalid Option"<<endl;
+                break;
             }
         }
     }
-};
+}
 
-int main()
-{
-    BST tree;
-    tree.menu();
-    return 0;
+int main() 
+{ 
+    node *root=NULL; 
+    display(root);
+    return 0; 
 }
