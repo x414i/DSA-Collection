@@ -169,6 +169,19 @@ void menu()
 
  }
 
+void traverseLevel(node* root, int targetLevel, int currentLevel, int result[], int& index) {
+        if (!root) return;
+
+        if (currentLevel == targetLevel) 
+        {
+            result[index++] = root->data; 
+        }
+        else 
+        {
+            traverseLevel(root->left, targetLevel, currentLevel + 1, result, index);
+            traverseLevel(root->right, targetLevel, currentLevel + 1, result, index);
+        }
+    }
 
 void display( node*root)
 {
@@ -255,6 +268,20 @@ void display( node*root)
                 cout<<"]\n";
                 cout<<"\n\n\t *** \n";
                 break;
+            }
+             case 11:
+            {
+            const int maxNodes = 10; 
+            int result[maxNodes];
+            int index = 0,targetLevel;
+            cout<<"Enter Target Level : ";cin>>targetLevel;
+            traverseLevel(root, targetLevel, 0, result, index);
+            cout << "Nodes at level [" << targetLevel << "] : ";
+                for (int i = 0; i < index; i++) {
+                    cout << result[i] << " ";
+                }
+                cout << endl;
+            break;
             }
             
            case 0:
