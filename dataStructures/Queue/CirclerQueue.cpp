@@ -12,20 +12,43 @@ public:
 // {
 // return ((rear == MAX_size-1 && front==0) || front == rear+1);
 // }
-bool isfull()
-{
-while(front!=-1 && rear !=-1)
-{
-    if(front==rear)
-    return true;
-    else if(front==0 && rear ==3)
-    return true;
-    else if(front==3 && rear ==0)
-    return true;
-    return false;
-}
-}
 
+
+// bool isfull()
+// {
+// while(front!=-1 && rear !=-1)
+// {
+//     if(front==rear)
+//     return true;
+//     else if(front==0 && rear ==3)
+//     return true;
+//     else if(front==3 && rear ==0)
+//     return true;
+//     return false;
+// }
+// }
+// bool isfull()
+// {
+// if(!isempty())
+// {
+//     if(front+1==rear)
+//     return true;
+//     else if(front==0 && rear ==3)
+//     return true;
+//     else if(front==3 && rear ==0)
+//     return true;
+// }
+//     return false;
+// }
+
+int isfull()
+{
+        if(front<rear) 
+        return(front+rear==3);
+        else if(front>rear) 
+        return(front-rear==1);
+        else return 0;
+}
 bool isempty()
 {
     return (front ==-1 && rear ==-1);

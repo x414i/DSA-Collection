@@ -11,19 +11,13 @@ int BinarySearch(const int arr[], int size, int value)
     while (start <= end)
     {
         int mid = (start + end) / 2;
-
         if (arr[mid] == value)
-
             return mid;
-
         else if (arr[mid] < value)
             start = mid + 1;
-
         else
-
             end = mid - 1;
     }
-
     return -1;
 }
 
