@@ -509,6 +509,7 @@ void display( node*root)
                 cout << "Tree has been converted to AVL" << endl;
                 break;
             }
+
             case 18:
             {
                 root = mirror(root);
