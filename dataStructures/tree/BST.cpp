@@ -344,7 +344,7 @@ node* mirror(node* root)
 
     root->left = right;
     root->right = left;
-    
+
     return root;
 }
 
@@ -368,6 +368,7 @@ void menu()
         cout <<"15. Revers Tree " << endl;
         cout <<"16. Print ALL Path Tree " << endl; 
         cout <<"17. Convert Tree To AVL " << endl; 
+        cout <<"18. Mirror Tree " << endl; 
         cout<<"0. Exit"<<endl;
             cout<<"\n\t***\n";
 
@@ -506,6 +507,12 @@ void display( node*root)
             {
                 root = convertToAVL(root);
                 cout << "Tree has been converted to AVL" << endl;
+                break;
+            }
+            case 18:
+            {
+                root = mirror(root);
+                cout << "Tree has been mirrored" << endl;
                 break;
             }
             case 0:
