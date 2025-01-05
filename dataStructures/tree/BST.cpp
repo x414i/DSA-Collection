@@ -334,6 +334,20 @@ node* convertToAVL(node* root)
     return balanceTree(root);
 }
 
+// mirror tree
+node* mirror(node* root) 
+{
+    if (root == NULL) return NULL;
+
+    node* left = mirror(root->left);
+    node* right = mirror(root->right);
+
+    root->left = right;
+    root->right = left;
+    
+    return root;
+}
+
 void menu()
     {
     cout<<"\n\t***\n";
