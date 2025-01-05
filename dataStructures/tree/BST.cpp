@@ -44,14 +44,12 @@ void print3(node *r)
     } 
 } 
 
-
 int sizeoftree(node *r) 
 { 
     if(r==NULL) 
         return 0; 
     else return sizeoftree(r->left)+1+sizeoftree(r->right); 
 } 
-
 
 node *addnode(node *r,int v) 
 { 
@@ -69,7 +67,6 @@ node *addnode(node *r,int v)
     r->right=addnode(r->right,v); 
     return r; 
 } 
-
 
 node *serach(node *r,int v) 
 { 
@@ -89,61 +86,60 @@ int getmax(node *r)
     return r->data; 
 } 
 
-
-node *getmin(node *r) 
+node *getmin(node *root) 
 { 
    // node *t=r; 
-    while(r->left!=NULL) 
-        r=r->left; 
- 
-    return r; 
+    while(root->left!=NULL) 
+        root=root->left; 
+    return root; 
 } 
 
-node *del(int v,node *r) 
+node *del(int v,node *root) 
 { 
-    if(r==NULL) 
-        return r; 
-    else if(v<r->data) 
-        r->left=del(v,r->left); 
-    else if(v>r->data) 
-        r->right=del(v,r->right); 
-    else if(r->left==NULL && r->right==NULL) 
+    if(root==NULL) 
+        return root; 
+
+    else if(v<root->data) 
+        root->left=del(v,root->left); 
+
+    else if(v>root->data) 
+        root->right=del(v,root->right); 
+
+    else if(root->left==NULL && root->right==NULL) 
     { 
-        free(r); 
+        free(root); 
         return NULL; 
     } 
-    else if(r->left==NULL) 
+    else if(root->left==NULL) 
     { 
-        node *t=r->right; 
-        free(r); 
+        node *t=root->right; 
+        free(root); 
         return t; 
     } 
- 
-    else if(r->right==NULL) 
+    else if(root->right==NULL) 
     { 
-        node *t=r->left; 
-        free(r); 
+        node *t=root->left; 
+        free(root); 
         return t; 
     } 
- 
-    else { 
-        node *t=getmin(r->right); 
-        r->data=t->data; 
-        r->right=del(t->data,r->right); 
+    else 
+    { 
+        node *t=getmin(root->right); 
+        root->data=t->data; 
+        root->right=del(t->data,root->right); 
     } 
- 
-    return r; 
+    return root; 
 } 
 
 int treeDepth(node *r) 
 { 
-       int leftDepth =0; int rightDepth =0 ; 
-    if (r == NULL) 
+    int leftDepth =0; int rightDepth =0 ; 
+        if (r == NULL) 
         return 0; 
-     leftDepth += treeDepth(r->left); 
-     rightDepth += treeDepth(r->right); 
-     int macDepth = leftDepth>=rightDepth?leftDepth:rightDepth; 
-     /* 
+    leftDepth += treeDepth(r->left); 
+    rightDepth += treeDepth(r->right); 
+    int macDepth = leftDepth>=rightDepth?leftDepth:rightDepth; 
+    /* 
      if(leftDepth>= rightDepth) 
   macDepth = leftDepth; 
   else 
@@ -167,7 +163,7 @@ void traverseLevel(node* root, int targetLevel, int currentLevel, int result[], 
         }
     }
 
-    bool findPath(node* root, int path[], int& pathLen, int k) 
+bool findPath(node* root, int path[], int& pathLen, int k) 
     {
         if (root == NULL) return false;
 
@@ -185,11 +181,11 @@ void traverseLevel(node* root, int targetLevel, int currentLevel, int result[], 
         pathLen--;
         return false;
     }
-    int numberOfEdges(node *r) 
-{ 
-   
+
+int numberOfEdges(node *r) 
+    { 
     return sizeoftree(r) > 0 ? sizeoftree(r) - 1 : 0; 
-}
+    }
 
 bool isAVL(node* root)
 {
@@ -203,7 +199,6 @@ bool isAVL(node* root)
 
     return isAVL(root->left) && isAVL(root->right);
 }
-
 
 // complate tree
 
